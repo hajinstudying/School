@@ -154,9 +154,10 @@ public class SchoolManagementEx {
             System.out.println("=============================");
             System.out.println("1. 교수 등록");
             System.out.println("2. 교수 조회");
-            System.out.println("3. 교수 정보 수정");
-            System.out.println("4. 교수 정보 삭제");
-            System.out.println("5. 메인 메뉴로 가기");
+            System.out.println("3. 교수 이름 검색");  //추가된 부분
+            System.out.println("4. 교수 정보 수정");
+            System.out.println("5. 교수 정보 삭제");  //삭제 확인 추가
+            System.out.println("6. 메인 메뉴로 가기");
             System.out.println("=============================");
             System.out.print("메뉴 선택: ");
             int choice = scanner.nextInt();
@@ -170,11 +171,14 @@ public class SchoolManagementEx {
                     displayProfessor();
                     break;
                 case 3:
-                    updateProfessor(scanner);
+                    searchProfessor(scanner);
                     break;
                 case 4:
-                    deleteProfessor(scanner);
+                    updateProfessor(scanner);
+                    break;
                 case 5:
+                    deleteProfessor(scanner);
+                case 6:
                     return;
                 default:
                     System.out.println("잘못된 입력입니다. 다시 선택해주세요.");
@@ -206,6 +210,21 @@ public class SchoolManagementEx {
         System.out.println("등록된 교수 목록");
         for (Professor p : repo.getProfessors()){
             System.out.println(p.getId() + " " + p.getName() + " " + p.getDepartment() + " " + p.getGrade() + " " + p.getHiredate());
+        }
+    }
+
+    private static void searchProfessor(Scanner scanner){
+        System.out.println("검색할 교수의 이름을 입력하세요: ");
+        String name = scanner.nextLine();
+        boolean found = false;  //검색 여부 플래그 변수
+        for(Professor p : repo.getProfessors()){
+            if(p.getName().equals(name)){
+                System.out.println(p);
+                found = true;
+            }
+        }
+        if(!found) {
+            System.out.println("해당 이름의 교수를 찾을 수 없습니다.");
         }
     }
 
@@ -243,9 +262,20 @@ public class SchoolManagementEx {
         String id = scanner.nextLine();
         for (int i = 0; i < repo.getProfessors().size(); i++){
             if(repo.getProfessors().get(i).getId().equals(id)) {
-                repo.getProfessors().remove(i);
-                System.out.println("교수 정보가 삭제되었습니다.");
-                return;
+                System.out.println(repo.getProfessors().get(i));
+
+                System.out.println("해당 교수를 삭제하시겠습니까?(y / n): ");
+                String confirm = scanner.nextLine();
+                if (confirm.equalsIgnoreCase("Y")) {
+                    repo.getProfessors().remove(i);
+                    System.out.println("교수 정보가 삭제되었습니다.");
+                    return;
+                } else if (confirm.equalsIgnoreCase("N")) {
+                    System.out.println("삭제가 취소되었습니다.");
+                    return;
+                }
+                System.out.println("잘못 입력하셨습니다.");
+                break;
             }
         }
         System.out.println("해당 ID의 교수를 찾을 수 없습니다.");
