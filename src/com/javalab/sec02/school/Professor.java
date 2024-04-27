@@ -4,12 +4,12 @@ package com.javalab.sec02.school;
 public class Professor {
 
     //필드
-    private String id;
-    private String jumin;
-    private String name;
-    private int department;
-    private String grade;
-    private String hiredate;
+    private String id;      //교수id
+    private String jumin;   //교수 주민번호
+    private String name;    //교수 이름
+    private int department; //교수 학과
+    private String grade;   //직급
+    private String hiredate;    //고용일
 
     //기본생성자
     public Professor() {}

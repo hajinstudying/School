@@ -24,15 +24,15 @@ public class SchoolManagementEx {
                 case 1:
                     studentMenu();
                     break;
-                case 2:
-                    professorMenu();
-                    break;
-                case 3:
-                    departmentMenu();
-                    break;
-                case 4:
-                    takesMenu();
-                    break;
+//                case 2:
+//                    professorMenu();
+//                    break;
+//                case 3:
+//                    departmentMenu();
+//                    break;
+//                case 4:
+//                    takesMenu();
+//                    break;
                 case 5:
                     System.out.println("프로그램을 종료합니다.");
                     scanner.close();
