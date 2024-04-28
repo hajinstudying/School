@@ -27,9 +27,9 @@ public class SchoolManagementEx {
                 case 2:
                     professorMenu();
                     break;
-//                case 3:
-//                    departmentMenu();
-//                    break;
+                case 3:
+                    departmentMenu();
+                    break;
 //                case 4:
 //                    takesMenu();
 //                    break;
@@ -280,5 +280,88 @@ public class SchoolManagementEx {
         }
         System.out.println("해당 ID의 교수를 찾을 수 없습니다.");
     }
+    private static void departmentMenu() {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("=============================");
+            System.out.println("1. 교실 조회");
+            System.out.println("2. 교실 예약");
+            System.out.println("3. 교실 예약 수정");
+            System.out.println("4. 교실 예약 삭제");
+            System.out.println("5. 메인 메뉴로 가기");
+            System.out.println("=============================");
+            System.out.print("메뉴 선택: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // 버퍼 비우기
 
+            switch (choice) {
+                case 1:
+                    displayClassroom();
+                    break;
+                case 2:
+                    reserveClassroom(scanner);
+                    break;
+                case 3:
+                    updateClassroom(scanner);
+                    break;
+                case 4:
+                    deleteClassroom(scanner);
+                    break;
+                case 5:
+                    return;
+                default:
+                    System.out.println("잘못된 입력입니다. 다시 선택해주세요.");
+            }
+        }
+    }
+
+    private static void displayClassroom() {
+        System.out.println("예약 목록:");
+        for (Department d : repo.getDepartments()) {
+            System.out.println(d.getId() + " " + d.getName() + " " + d.getOffice());
+        }
+    }
+    private static void reserveClassroom (Scanner scanner) {
+        System.out.println("학과명: ");
+        String name = scanner.nextLine();
+        System.out.println("학과 ID: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("에약 원하는 교실: ");
+        String office = scanner.nextLine();
+
+        Department reserve = new Department(id, name, office);
+        repo.getDepartments().add(reserve);
+        System.out.println("예약이 완료되었습니다.");
+    }
+
+    private static void updateClassroom(Scanner scanner) {
+        System.out.println("예약한 학과 ID를 입력하세요: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        for (Department d: repo.getDepartments()) {
+            if (d.getId() == id) {
+                System.out.println("새 예약 교실: ");
+                String office = scanner.nextLine();
+
+                d.setOffice(office);
+                System.out.println("예약 정보가 업데이트 되었습니다.");
+                return;
+            }
+        }
+        System.out.println("해당 ID의 예약을 찾을 수 없습니다.");
+    }
+
+    private static void deleteClassroom(Scanner scanner) {
+        System.out.println("예약을 취소할 학과의 ID를 입력하세요: ");
+        int id  = scanner.nextInt();
+        for (int i = 0; i < repo.getDepartments().size(); i++) {
+            if (repo.getDepartments().get(i).getId() == id) {
+                repo.getDepartments().remove(i);
+                System.out.println("예약이 취소되었습니다.");
+                return;
+            }
+        }
+        System.out.println("해당 ID의 예약을 찾을 수 없습니다.");
+    }
 }   // end of class SchoolManagementEx
