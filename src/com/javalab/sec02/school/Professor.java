@@ -4,12 +4,12 @@ package com.javalab.sec02.school;
 public class Professor {
 
     //필드
-    private String id;      //교수id
+    private String id;      //교수 id
     private String jumin;   //교수 주민번호
     private String name;    //교수 이름
-    private int department; //교수 학과
+    private int department; //교수 학과코드
     private String grade;   //직급
-    private String hiredate;    //고용일
+    private String hiredate;    //입사년도
 
     //기본생성자
     public Professor() {}
@@ -64,7 +64,7 @@ public class Professor {
 
     @Override
     public String toString() {
-        return "Professor [id=" + id + ", jumin=" + jumin + ", name=" + name + ", department=" + department + ", grade="
+        return "Professor [id=" + id + ", name=" + name + ", department=" + department + ", grade="
                 + grade + ", hiredate=" + hiredate + "]";
     }
 
