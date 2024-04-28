@@ -30,9 +30,9 @@ public class SchoolManagementEx {
                 case 3:
                     departmentMenu();
                     break;
-//                case 4:
-//                    takesMenu();
-//                    break;
+                case 4:
+                    takesMenu();
+                    break;
                 case 5:
                     System.out.println("프로그램을 종료합니다.");
                     scanner.close();
@@ -364,4 +364,44 @@ public class SchoolManagementEx {
         }
         System.out.println("해당 ID의 예약을 찾을 수 없습니다.");
     }
+
+    private static void takesMenu(){
+        Scanner scanner = new Scanner(System.in);
+        while(true){
+            System.out.println("=============================");
+            System.out.println("1. 성적 등록");
+            System.out.println("2. 성적 조회");
+            System.out.println("3. 성적 수정");
+            System.out.println("4. 성적 삭제");
+            System.out.println("5. 메인 메뉴로 가기");
+            System.out.println("=============================");
+            System.out.print("메뉴 선택: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // 버퍼 비우기
+
+            switch (choice) {
+                case 1:
+                    //성적 등록 메소드 호출
+                    break;
+                case 2:
+                    //성적 조회 메소드 호출
+                    break;
+                case 3:
+                    //성적 수정 메소드 호출
+                    break;
+                case 4:
+                    //성적 삭제 메소드 호출
+                    break;
+                case 5:
+                    return;
+                default:
+                    System.out.println("잘못된 입력입니다. 다시 선택해주세요.");
+            }
+        }
+    }
+
+
+
+
+
 }   // end of class SchoolManagementEx
