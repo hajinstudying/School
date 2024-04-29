@@ -377,7 +377,7 @@ public class SchoolManagementEx {
             System.out.println("=============================");
             System.out.print("메뉴 선택: ");
             int choice = scanner.nextInt();
-            scanner.nextLine(); // 버퍼 비우기
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
