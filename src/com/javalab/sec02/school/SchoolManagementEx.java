@@ -30,9 +30,9 @@ public class SchoolManagementEx {
                 case 3:
                     departmentMenu();
                     break;
-//                case 4:
-//                    takesMenu();
-//                    break;
+                case 4:
+                    takesMenu();
+                    break;
                 case 5:
                     System.out.println("프로그램을 종료합니다.");
                     scanner.close();
@@ -135,6 +135,7 @@ public class SchoolManagementEx {
         }
         System.out.println("해당 ID의 학생을 찾을 수 없습니다.");
     }
+
     private static void deleteStudent(Scanner scanner) {
         System.out.println("삭제할 학생의 ID를 입력하세요: ");
         String id = scanner.nextLine();
@@ -150,7 +151,7 @@ public class SchoolManagementEx {
 
     private static void professorMenu() {
         Scanner scanner = new Scanner(System.in);
-        while(true){
+        while (true) {
             System.out.println("=============================");
             System.out.println("1. 교수 등록");
             System.out.println("2. 교수 조회");
@@ -186,7 +187,7 @@ public class SchoolManagementEx {
         }
     }
 
-    private static void registerProfessor(Scanner scanner){
+    private static void registerProfessor(Scanner scanner) {
         System.out.println("교수 ID: ");
         String id = scanner.nextLine();
         System.out.println("주민번호: ");
@@ -208,22 +209,22 @@ public class SchoolManagementEx {
 
     private static void displayProfessor() {
         System.out.println("등록된 교수 목록");
-        for (Professor p : repo.getProfessors()){
+        for (Professor p : repo.getProfessors()) {
             System.out.println(p.getId() + " " + p.getName() + " " + p.getDepartment() + " " + p.getGrade() + " " + p.getHiredate());
         }
     }
 
-    private static void searchProfessor(Scanner scanner){
+    private static void searchProfessor(Scanner scanner) {
         System.out.println("검색할 교수의 이름을 입력하세요: ");
         String name = scanner.nextLine();
         boolean found = false;  //검색 여부 플래그 변수
-        for(Professor p : repo.getProfessors()){
-            if(p.getName().equals(name)){
+        for (Professor p : repo.getProfessors()) {
+            if (p.getName().equals(name)) {
                 System.out.println(p);
                 found = true;
             }
         }
-        if(!found) {
+        if (!found) {
             System.out.println("해당 이름의 교수를 찾을 수 없습니다.");
         }
     }
@@ -232,7 +233,7 @@ public class SchoolManagementEx {
         System.out.println("수정할 교수의 ID를 입력하세요: ");
         String id = scanner.nextLine();
         for (Professor f : repo.getProfessors()) {
-            if(f.getId().equals(id)){
+            if (f.getId().equals(id)) {
                 System.out.println("새 주민번호: ");
                 String jumin = scanner.nextLine();
                 System.out.println("새 이름: ");
@@ -260,8 +261,8 @@ public class SchoolManagementEx {
     private static void deleteProfessor(Scanner scanner) {
         System.out.println("삭제할 교수의 ID를 입력하세요: ");
         String id = scanner.nextLine();
-        for (int i = 0; i < repo.getProfessors().size(); i++){
-            if(repo.getProfessors().get(i).getId().equals(id)) {
+        for (int i = 0; i < repo.getProfessors().size(); i++) {
+            if (repo.getProfessors().get(i).getId().equals(id)) {
                 System.out.println(repo.getProfessors().get(i));
 
                 System.out.println("해당 교수를 삭제하시겠습니까?(y / n): ");
@@ -280,6 +281,7 @@ public class SchoolManagementEx {
         }
         System.out.println("해당 ID의 교수를 찾을 수 없습니다.");
     }
+
     private static void departmentMenu() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -321,7 +323,8 @@ public class SchoolManagementEx {
             System.out.println(d.getId() + " " + d.getName() + " " + d.getOffice());
         }
     }
-    private static void reserveClassroom (Scanner scanner) {
+
+    private static void reserveClassroom(Scanner scanner) {
         System.out.println("학과명: ");
         String name = scanner.nextLine();
         System.out.println("학과 ID: ");
@@ -339,7 +342,7 @@ public class SchoolManagementEx {
         System.out.println("예약한 학과 ID를 입력하세요: ");
         int id = scanner.nextInt();
         scanner.nextLine();
-        for (Department d: repo.getDepartments()) {
+        for (Department d : repo.getDepartments()) {
             if (d.getId() == id) {
                 System.out.println("새 예약 교실: ");
                 String office = scanner.nextLine();
@@ -354,7 +357,7 @@ public class SchoolManagementEx {
 
     private static void deleteClassroom(Scanner scanner) {
         System.out.println("예약을 취소할 학과의 ID를 입력하세요: ");
-        int id  = scanner.nextInt();
+        int id = scanner.nextInt();
         for (int i = 0; i < repo.getDepartments().size(); i++) {
             if (repo.getDepartments().get(i).getId() == id) {
                 repo.getDepartments().remove(i);
@@ -364,4 +367,129 @@ public class SchoolManagementEx {
         }
         System.out.println("해당 ID의 예약을 찾을 수 없습니다.");
     }
-}   // end of class SchoolManagementEx
+
+    private static void takesMenu() {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("=============================");
+            System.out.println("1. 성적 등록");
+            System.out.println("2. 성적 조회");
+            System.out.println("3. 성적 수정");
+            System.out.println("4. 메인 메뉴로 가기");
+            System.out.println("=============================");
+            System.out.print("메뉴 선택: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // 버퍼 비우기
+
+            switch (choice) {
+                case 1:
+                    registerGrade(scanner);
+                    break;
+                case 2:
+                    viewGrades();
+                    break;
+//                case 3:
+//                    modifyGrade(scanner);
+//                    break;
+                case 4:
+                    return;
+                default:
+                    System.out.println("잘못된 입력입니다. 다시 선택해주세요.");
+            }
+        }
+    }
+
+    private static void registerGrade(Scanner scanner) {
+        System.out.println("학생 이름: ");
+        String studentName = scanner.nextLine();
+
+        StudentGrades student = new StudentGrades(studentName);
+
+        System.out.println("과목 이름: ");
+        String subject = scanner.nextLine();
+
+        System.out.println("성적: ");
+        int grade = scanner.nextInt();
+        scanner.nextLine();
+
+        student.addGrade(subject, grade);
+        repo.getStudents().add(subject);
+        repo.getStudents().add(grade);
+
+        private static void viewGrades(Scanner scanner) {
+            System.out.println("등록된 성적 목록:");
+
+            // Iterate through takes
+            for (Takes takes : repo.getTakes()) {
+                System.out.println("학생 ID: " + takes.getId());
+                System.out.println("과목: " + takes.getSubject());
+                System.out.println("성적: " + takes.getScore());
+                System.out.println();
+            }
+
+            // Prompt for modifying a grade
+            System.out.println("성적을 수정하시겠습니까? (Y/N): ");
+            String choice = scanner.nextLine();
+
+            if (choice.equalsIgnoreCase("Y")) {
+                // Prompt for student ID and subject
+                System.out.println("학생 ID를 입력하세요: ");
+                String studentID = scanner.nextLine();
+                System.out.println("과목을 입력하세요: ");
+                String subject = scanner.nextLine();
+
+                // Prompt for new score
+                System.out.println("새로운 성적을 입력하세요: ");
+                String newScore = scanner.nextLine();
+
+                // Update the score
+                for (Takes takes : repo.getTakes()) {
+                    if (takes.getId().equals(studentID) && takes.getSubject().equals(subject)) {
+                        takes.setScore(newScore);
+                        System.out.println("성적이 성공적으로 수정되었습니다.");
+                        return;
+                    }
+                }
+                System.out.println("해당 학생의 성적을 찾을 수 없습니다.");
+            }
+        }
+
+        System.out.println("성적이 성공적으로 등록되었습니다.");
+    }
+
+    private static void viewGrades() {
+        System.out.println("등록된 성적 목록:");
+        for (Student student : repo.getStudents()) {
+            for (Takes takes : repo.getTakes()){
+                if (student.getId().equals(takes.getId())){
+                    System.out.println("학생 학번: " + student.getId());
+                    System.out.println("학생 이름: " + student.getName());
+                    System.out.println("성적: " + takes.getScore());
+                    System.out.println("과목: " + takes.getSubject());
+                }
+            }
+        }
+    }
+
+    private static void modifyGrade(Scanner scanner) {
+        System.out.println("학생 이름: ");
+        String studentName = scanner.nextLine();
+
+        for (Student student : repo.getStudents()) {
+            if (student.getName().equals(studentName)) {
+                System.out.println("새로운 과목 이름: ");
+                String subject = scanner.nextLine();
+
+                System.out.println("새로운 성적: ");
+                int grade = scanner.nextInt();
+                scanner.nextLine();
+
+                student.getgrade(subject, grade);
+
+                System.out.println("성적이 성공적으로 수정되었습니다.");
+                return;
+            }
+        }
+        System.out.println("해당 학생을 찾을 수 없습니다.");
+    }
+}
