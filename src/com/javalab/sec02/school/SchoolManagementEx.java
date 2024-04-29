@@ -407,7 +407,7 @@ public class SchoolManagementEx {
         System.out.print("점수를 입력할 학생 수를 입력하세요: ");
         int numStudents = scanner.nextInt();
         scanner.nextLine();
-        String score = null;
+        String score;
         for(int i = 0; i < numStudents; i++){
             System.out.println("학생 id를 입력하세요: ");
             String id = scanner.nextLine();
@@ -474,32 +474,26 @@ public class SchoolManagementEx {
     }
 
     private static void deleteTakes(Scanner scanner) {
-        System.out.println("삭제할 학생이 있는 과목코드를 입력해주세요: ");
+        System.out.println("삭제할 성적의 과목코드를 입력해주세요: ");
         String subject = scanner.nextLine();
         boolean foundSubject = false;   //과목을 찾았는지 판단한 변수
-        boolean foundStudent;   //학생을 찾았는지 판단한 변수
-        for (Takes t : repo.getTakes()) {
-            if (t.getSubject().equals(subject)) { // 과목코드 비교
-                foundSubject = true; // 과목코드를 찾음을 표시
-                System.out.println("삭제할 학생의 학번을 입력해주세요: ");
+        for (int i = 0; i < repo.getTakes().size(); i++) {
+            if (repo.getTakes().get(i).getSubject().equals(subject)) {
+                foundSubject = true;
+                System.out.println("삭제할 성적의 학생번호를 입력해주세요: ");
                 String id = scanner.nextLine();
-                foundStudent = false;
-                for (Takes take : repo.getTakes()) {
-                    if (take.getId().equals(id)) {
-                        foundStudent = true;    //학생을 찾았음을 표시
-                        repo.getTakes().remove(take);
-                        System.out.println("성적이 삭제되었습니다.");
-                        return;
-                    }
-                }
-                if (!foundStudent) {
-                    System.out.println(subject + " 과목에는 해당 학생이 없습니다.");
+                if (repo.getTakes().get(i).getId().equals(id)) {
+                    repo.getTakes().remove(i);
+                    System.out.println("성적이 삭제되었습니다.");
                     return;
                 }
+                System.out.println(subject + " 과목에 해당 학생번호가 없습니다.");
+                return;
             }
         }
-        if (!foundSubject) {
-            System.out.println("해당 과목코드를 찾을 수 없습니다.");
+        if(!foundSubject){
+            System.out.println("잘못 입력하셨습니다.");
+            return;
         }
     }
 }   // end of class SchoolManagementEx
