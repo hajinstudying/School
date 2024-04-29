@@ -451,11 +451,9 @@ public class SchoolManagementEx {
     private static void updateTakes(Scanner scanner) {
         System.out.println("수정할 성적의 과목코드를 입력해주세요: ");
         String subject = scanner.nextLine();
-        boolean foundSubject = false;   //과목을 찾았는지 판단한 변수
 
         for (Takes takes : repo.getTakes()) {
             if (takes.getSubject().equals(subject)) {
-                foundSubject = true;
                 System.out.println("수정할 성적의 학생번호를 입력해주세요: ");
                 String id = scanner.nextLine();
                 for (Takes t : repo.getTakes()) {
@@ -471,18 +469,15 @@ public class SchoolManagementEx {
                 return;
             }
         }
-
         System.out.println("해당 과목코드를 찾을 수 없습니다.");
     }
 
     private static void deleteTakes(Scanner scanner){
         System.out.println("삭제할 성적의 과목코드를 입력해주세요: ");
         String subject = scanner.nextLine();
-        boolean foundSubject = false;   //과목을 찾았는지 판단한 변수
 
         for (Takes takes : repo.getTakes()) {
             if (takes.getSubject().equals(subject)) {
-                foundSubject = true;
                 System.out.println("삭제할 성적의 학생번호를 입력해주세요: ");
                 String id = scanner.nextLine();
                 for (Takes t : repo.getTakes()) {
