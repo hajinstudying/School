@@ -451,46 +451,42 @@ public class SchoolManagementEx {
     private static void updateTakes(Scanner scanner) {
         System.out.println("수정할 성적의 과목코드를 입력해주세요: ");
         String subject = scanner.nextLine();
+        System.out.println("수정할 성적의 학생번호를 입력해주세요: ");
+        String id = scanner.nextLine();
+        boolean found = false;
 
         for (Takes takes : repo.getTakes()) {
-            if (takes.getSubject().equals(subject)) {
-                System.out.println("수정할 성적의 학생번호를 입력해주세요: ");
-                String id = scanner.nextLine();
-                for (Takes t : repo.getTakes()) {
-                    if (t.getId().equals(id) && t.getSubject().equals(subject)) {
-                        System.out.println("새 성적: ");
-                        String score = scanner.nextLine();
-                        t.setScore(score);
-                        System.out.println("성적이 수정되었습니다.");
-                        return;
-                    }
-                }
-                System.out.println(subject + " 과목에 해당 학생번호가 없습니다.");
-                return;
+            if (takes.getSubject().equals(subject) && takes.getId().equals(id)) {
+                System.out.println("새 성적: ");
+                String score = scanner.nextLine();
+                takes.setScore(score);
+                System.out.println("성적이 수정되었습니다.");
+                found = true;
+                break;
             }
         }
-        System.out.println("해당 과목코드를 찾을 수 없습니다.");
+        if (!found) {
+            System.out.println("해당 과목코드와 학생번호에 해당하는 성적을 찾을 수 없습니다.");
+        }
     }
 
-    private static void deleteTakes(Scanner scanner){
+    private static void deleteTakes(Scanner scanner) {
         System.out.println("삭제할 성적의 과목코드를 입력해주세요: ");
         String subject = scanner.nextLine();
+        System.out.println("삭제할 성적의 학생번호를 입력해주세요: ");
+        String id = scanner.nextLine();
+        boolean found = false;  //플래그 변수
 
         for (Takes takes : repo.getTakes()) {
-            if (takes.getSubject().equals(subject)) {
-                System.out.println("삭제할 성적의 학생번호를 입력해주세요: ");
-                String id = scanner.nextLine();
-                for (Takes t : repo.getTakes()) {
-                    if (t.getId().equals(id) && t.getSubject().equals(subject)) {
-                        repo.getTakes().remove(t);
-                        System.out.println("성적이 삭제되었습니다.");
-                        return;
-                    }
-                }
-                System.out.println(subject + " 과목에 해당 학생번호가 없습니다.");
-                return;
+            if (takes.getSubject().equals(subject) && takes.getId().equals(id)) {
+                repo.getTakes().remove(takes);
+                found = true;
+                System.out.println("성적이 삭제되었습니다.");
+                break;
             }
         }
-        System.out.println("해당 과목코드를 찾을 수 없습니다.");
+        if (!found) {
+            System.out.println("해당 과목코드와 학생번호에 해당하는 성적을 찾을 수 없습니다.");
+        }
     }
 }   // end of class SchoolManagementEx
