@@ -30,9 +30,9 @@ public class SchoolManagementEx {
                 case 3:
                     departmentMenu();
                     break;
-//                case 4:
-//                    takesMenu();
-//                    break;
+                case 4:
+                    takesMenu();
+                    break;
                 case 5:
                     System.out.println("프로그램을 종료합니다.");
                     scanner.close();
@@ -363,5 +363,143 @@ public class SchoolManagementEx {
             }
         }
         System.out.println("해당 ID의 예약을 찾을 수 없습니다.");
+    }
+
+    private static void takesMenu(){
+        Scanner scanner = new Scanner(System.in);
+        while(true){
+            System.out.println("=============================");
+            System.out.println("1. 성적 등록");
+            System.out.println("2. 성적 조회");
+            System.out.println("3. 성적 수정");
+            System.out.println("4. 성적 삭제");
+            System.out.println("5. 메인 메뉴로 가기");
+            System.out.println("=============================");
+            System.out.print("메뉴 선택: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // 버퍼 비우기
+
+            switch (choice) {
+                case 1:
+                    registerGrade(scanner);
+                    break;
+                case 2:
+                    displayGrade();
+                    break;
+                case 3:
+                    updateTakes(scanner);
+                    break;
+                case 4:
+                    deleteTakes(scanner);
+                    break;
+                case 5:
+                    return;
+                default:
+                    System.out.println("잘못된 입력입니다. 다시 선택해주세요.");
+            }
+        }
+    }
+
+    private static void registerGrade(Scanner scanner){
+        // 학생 수를 입력 받습니다.
+        System.out.println("과목 코드를 입력하세요: ");
+        String subject = scanner.nextLine();
+        System.out.print("점수를 입력할 학생 수를 입력하세요: ");
+        int numStudents = scanner.nextInt();
+        scanner.nextLine();
+        String score = null;
+        for(int i = 0; i < numStudents; i++){
+            System.out.println("학생 id를 입력하세요: ");
+            String id = scanner.nextLine();
+            System.out.println("해당 학생의 점수를 입력해주세요: ");
+            int intScore = scanner.nextInt();
+            scanner.nextLine();
+            // 점수에 따라 학점 결정
+            if (intScore >= 95) {
+                score = "A+";
+            } else if (intScore >= 90) {
+                score = "A";
+            } else if (intScore >= 85) {
+                score = "B+";
+            } else if (intScore >= 80) {
+                score = "B";
+            } else if (intScore >= 75) {
+                score = "C+";
+            } else if (intScore >= 70) {
+                score = "C";
+            } else if (intScore >= 65) {
+                score = "D+";
+            } else if (intScore >= 60) {
+                score = "D";
+            } else {
+                score = "F";
+            }
+            System.out.println("과목: " + subject + " 학번: " + id + " 성적: " + score);
+            Takes takes = new Takes(id, subject, score);
+            repo.getTakes().add(takes);
+        }
+        System.out.println("점수가 성공적으로 등록되었습니다.");
+    }
+
+    private static void displayGrade(){
+        System.out.println("등록된 점수 목록");
+        for(Takes t : repo.getTakes()){
+            System.out.println(t.getId() + " " + t.getSubject() + " " + t.getScore());
+        }
+    }
+
+    private static void updateTakes(Scanner scanner){
+        System.out.println("과목코드를 입력하세요: ");
+        String subject = scanner.nextLine();
+        boolean foundSubject = false; // 과목코드를 찾았는지 여부를 저장하는 변수 추가
+        for (Takes t : repo.getTakes()) {
+            if (t.getSubject().equals(subject)) { // 과목코드 비교
+                foundSubject = true;
+                System.out.println("학생의 학번을 입력해주세요: ");
+                String id = scanner.nextLine();
+                if (t.getId().equals(id)) {
+                    System.out.println("새 학점 : ");
+                    String score = scanner.nextLine();
+                    t.setScore(score);
+                    System.out.println("학점이 업데이트되었습니다.");
+                    return;
+                }
+            }
+        }
+        if (!foundSubject) {
+            System.out.println("해당 과목코드를 찾을 수 없습니다.");
+        } else {
+            System.out.println(subject + " 과목에는 해당 학생이 없습니다.");
+        }
+    }
+
+    private static void deleteTakes(Scanner scanner) {
+        System.out.println("삭제할 학생이 있는 과목코드를 입력해주세요: ");
+        String subject = scanner.nextLine();
+        boolean foundSubject = false;   //과목을 찾았는지 판단한 변수
+        boolean foundStudent;   //학생을 찾았는지 판단한 변수
+        for (Takes t : repo.getTakes()) {
+            if (t.getSubject().equals(subject)) { // 과목코드 비교
+                foundSubject = true; // 과목코드를 찾음을 표시
+                System.out.println("삭제할 학생의 학번을 입력해주세요: ");
+                String id = scanner.nextLine();
+                foundStudent = false;
+                for (Takes take : repo.getTakes()) {
+                    if (take.getId().equals(id)) {
+                        foundStudent = true;    //학생을 찾았음을 표시
+                        repo.getTakes().remove(take);
+                        System.out.println("성적이 삭제되었습니다.");
+                        return;
+                    }
+                }
+                if (!foundStudent) {
+                    System.out.println(subject + " 과목에는 해당 학생이 없습니다.");
+                    return;
+                }
+            }
+        }
+        if (!foundSubject) {
+            System.out.println("해당 과목코드를 찾을 수 없습니다.");
+        }
     }
 }   // end of class SchoolManagementEx
